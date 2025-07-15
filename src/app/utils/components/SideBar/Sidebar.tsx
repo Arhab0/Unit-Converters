@@ -48,7 +48,7 @@ const Sidebar: React.FC = () => {
             src={Logo}
             alt="logo"
             className="w-48 mx-auto"
-            onClick={() => setIsOpened(!isOpened)}
+            // onClick={() => setIsOpened(!isOpened)}
           />
         </Link>
       )}

@@ -237,7 +237,7 @@ const GetConversionAccordingToPathname = () => {
     Pounds: {
       heading: "More Pounds Conversions",
       label: "Pounds to other...",
-      link: "/Converters/linkedConversions/PoundsToOthers",
+      link: "/Converters/linkedConversions/PoundToOthers",
     },
     Psi: {
       heading: "More Psi Conversions",

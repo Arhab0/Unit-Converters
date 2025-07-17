@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import unitMaps from "../../../../../Helper/Units";
 import LinkDisplay from "../LinkDisplay/LinkDisplay";
+import { OPTIONS } from "../../lib/type";
+import NormalDropdown from "../NormalDropdown/NormalDropdown";
 
 const temperatureUnits = ["Celsius", "Fahrenheit", "Kelvin"];
 
@@ -12,6 +14,7 @@ const ConverterHome: React.FC = () => {
   const [fromUnit, setFromUnit] = useState<string>("Meter");
   const [toUnit, setToUnit] = useState<string>("Kilometer");
 
+  const [options, setOptions] = useState<OPTIONS[]>([]);
   const categories = Object.keys(unitMaps).concat("TemperatureUnits");
 
   const getUnits = () => {
@@ -45,6 +48,21 @@ const ConverterHome: React.FC = () => {
   const numericValue = parseFloat(fromValue) || 0;
   const result = convert(numericValue, fromUnit, toUnit);
 
+  useEffect(() => {
+    const arr: { value: any; label: any }[] = [];
+
+    const unitsArray = units as any[];
+
+    for (let i = 0; i < unitsArray.length; i++) {
+      const D = unitsArray[i];
+      arr.push({
+        value: D,
+        label: D,
+      });
+    }
+    setOptions(arr);
+  }, []);
+
   return (
     <>
       <div className="p-6 font-sans w-full  bg-white rounded-lg shadow-sm">
@@ -53,30 +71,6 @@ const ConverterHome: React.FC = () => {
         </h1>
 
         <div className="mb-8 p-4 bg-gray-50 rounded-lg border border-[#006633]/10">
-          {/* <div className="flex flex-wrap gap-2 mb-6 justify-center">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              className={`px-4 py-2 rounded-full text-sm transition-all ${
-                category === cat
-                  ? "bg-[#006633] text-white font-medium shadow-md"
-                  : "bg-white text-gray-700 border border-[#006633]/20 hover:border-[#006633]/40"
-              }`}
-              onClick={() => {
-                setCategory(cat);
-                const units =
-                  cat === "TemperatureUnits"
-                    ? temperatureUnits
-                    : Object.keys(unitMaps[cat]);
-                setFromUnit(units[0]);
-                setToUnit(units[1] || units[0]);
-                setFromValue("");
-              }}
-            >
-              {cat}
-            </button>
-          ))}
-        </div> */}
           <div className="flex flex-wrap gap-2 sm:gap-3 px-2 overflow-x-auto mb-2">
             {categories.map((cat) => (
               <button
@@ -114,7 +108,7 @@ const ConverterHome: React.FC = () => {
                 className="w-full p-3 border border-[#138a55] rounded-lg outline-none  transition"
                 placeholder="Enter value"
               />
-              <select
+              {/* <select
                 value={fromUnit}
                 onChange={(e) => setFromUnit(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-lg outline-none bg-white transition"
@@ -124,7 +118,17 @@ const ConverterHome: React.FC = () => {
                     {unit}
                   </option>
                 ))}
-              </select>
+              </select> */}
+              <NormalDropdown
+                options={options}
+                activeId={fromUnit}
+                name="selectedOption"
+                handleDropdownChange={(name, value) =>
+                  // if(value !== null || value !==)
+                  setFromValue(value as string)
+                }
+                clearable={true}
+              />
             </div>
 
             <div className="space-y-2">
@@ -137,7 +141,7 @@ const ConverterHome: React.FC = () => {
                 value={fromValue ? result.toFixed(6) : ""}
                 className="w-full p-3 border border-[#138a55] outline-none rounded-lg bg-gray-50 "
               />
-              <select
+              {/* <select
                 value={toUnit}
                 onChange={(e) => setToUnit(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded-lg outline-none bg-white transition"
@@ -147,7 +151,17 @@ const ConverterHome: React.FC = () => {
                     {unit}
                   </option>
                 ))}
-              </select>
+              </select> */}
+              <NormalDropdown
+                options={options}
+                activeId={toUnit}
+                name="selectedOption"
+                handleDropdownChange={(name, value) =>
+                  // if(value !== null || value !==)
+                  setToUnit(value as string)
+                }
+                clearable={true}
+              />
             </div>
           </div>
 

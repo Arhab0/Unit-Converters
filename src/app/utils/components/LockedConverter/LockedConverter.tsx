@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import CategoryLinksList from "../CategoryList/CategoryLinksList";
+import NormalDropdown from "../NormalDropdown/NormalDropdown";
+import { OPTIONS } from "../../lib/type";
 
 interface LockedUnitConverterProps {
   heading: string;
@@ -16,9 +18,10 @@ const LockedUnitConverter: React.FC<LockedUnitConverterProps> = ({
   units,
   convert,
 }) => {
+  console.log(units);
   const [fromValue, setFromValue] = useState<string>("");
   const [toUnit, setToUnit] = useState<string>(units[0]);
-
+  const [options, setOptions] = useState<OPTIONS[]>([]);
   const numericValue = parseFloat(fromValue) || 0;
   const result = convert(numericValue, lockedFromUnit, toUnit);
 
@@ -28,8 +31,24 @@ const LockedUnitConverter: React.FC<LockedUnitConverterProps> = ({
         top: 0,
         behavior: "smooth",
       });
+
+      const arr: { value: any; label: any }[] = [];
+
+      const unitsArray = units as any[];
+
+      for (let i = 0; i < unitsArray.length; i++) {
+        const D = unitsArray[i];
+        arr.push({
+          value: D,
+          label: D,
+        });
+      }
+      setOptions(arr);
+      // console.log()
     }, [localStorage.getItem("recentPath")]);
   }
+
+  // useEffect()
   return (
     <div className="p-6 font-sans w-full bg-white rounded-lg shadow-sm">
       <h1 className="font-bold text-2xl sm:text-3xl text-[#006633] mb-6 text-center">
@@ -69,7 +88,7 @@ const LockedUnitConverter: React.FC<LockedUnitConverterProps> = ({
               value={fromValue ? result.toFixed(6) : ""}
               className="w-full p-3 border border-[#138a55] outline-none rounded-lg bg-gray-50"
             />
-            <select
+            {/* <select
               value={toUnit}
               onChange={(e) => setToUnit(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg outline-none bg-white transition"
@@ -79,7 +98,17 @@ const LockedUnitConverter: React.FC<LockedUnitConverterProps> = ({
                   {unit}
                 </option>
               ))}
-            </select>
+            </select> */}
+            <NormalDropdown
+              options={options}
+              activeId={toUnit}
+              name="selectedOption"
+              handleDropdownChange={(name, value) =>
+                // if(value !== null || value !==)
+                setToUnit(value as string)
+              }
+              clearable={true}
+            />
           </div>
         </div>
 

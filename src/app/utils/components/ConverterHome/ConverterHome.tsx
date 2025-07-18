@@ -44,24 +44,24 @@ const ConverterHome: React.FC = () => {
     return baseValue / currentMap[to];
   };
 
-  const units = getUnits();
   const numericValue = parseFloat(fromValue) || 0;
   const result = convert(numericValue, fromUnit, toUnit);
 
   useEffect(() => {
-    const arr: { value: any; label: any }[] = [];
+    const newUnits =
+      category === "TemperatureUnits"
+        ? temperatureUnits
+        : Object.keys(unitMaps[category]);
 
-    const unitsArray = units as any[];
-
-    for (let i = 0; i < unitsArray.length; i++) {
-      const D = unitsArray[i];
-      arr.push({
-        value: D,
-        label: D,
-      });
-    }
+    const arr = newUnits.map((unit) => ({
+      value: unit,
+      label: unit,
+    }));
     setOptions(arr);
-  }, []);
+    setFromUnit(newUnits[0]);
+    setToUnit(newUnits[1]);
+    setFromValue("");
+  }, [category]);
 
   return (
     <>
@@ -87,7 +87,7 @@ const ConverterHome: React.FC = () => {
                       ? temperatureUnits
                       : Object.keys(unitMaps[cat]);
                   setFromUnit(units[0]);
-                  setToUnit(units[1] || units[0]);
+                  setToUnit(units[1]);
                   setFromValue("");
                 }}
               >
@@ -125,7 +125,7 @@ const ConverterHome: React.FC = () => {
                 name="selectedOption"
                 handleDropdownChange={(name, value) =>
                   // if(value !== null || value !==)
-                  setFromValue(value as string)
+                  setFromUnit(value as string)
                 }
                 clearable={true}
               />
@@ -138,7 +138,7 @@ const ConverterHome: React.FC = () => {
               <input
                 type="text"
                 readOnly
-                value={fromValue ? result.toFixed(6) : ""}
+                value={fromValue ? result : ""}
                 className="w-full p-3 border border-[#138a55] outline-none rounded-lg bg-gray-50 "
               />
               {/* <select
@@ -169,7 +169,7 @@ const ConverterHome: React.FC = () => {
             <div className="mt-4 p-3 bg-[#006633]/5 rounded-lg border border-[#006633]/10">
               <p className="text-[#006633] font-medium text-center">
                 {numericValue} {fromUnit} ={" "}
-                <span className="font-bold">{result.toFixed(6)}</span> {toUnit}
+                <span className="font-bold">{result}</span> {toUnit}
               </p>
             </div>
           )}

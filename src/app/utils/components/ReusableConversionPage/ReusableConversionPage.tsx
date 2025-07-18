@@ -100,61 +100,17 @@ const ReusableConversionPage: React.FC<ConversionPageProps> = ({
           <GreenBtn text="Clear" clickEvent={clear} />
         </div>
       </div>
-      {/* <div className="w-full max-w-md mt-10 px-2 py-4 bg-white rounded shadow">
-        <div className="flex justify-between items-center sm:gap-0 -gap-x-1 flex-wrap">
-          <div>
-            <div className="flex items-center mb-4">
-              <label className="w-16 font-semibold">From:</label>
-              <div className="w-48">
-                <InputTag
-                  value={fromValue}
-                  setter={(n, v) => setFromValue(v)}
-                  name={fromUnit}
-                />
-              </div>
-              <span className="ml-2 font-bold">{fromUnit}</span>
-            </div>
-
-            <div className="flex items-center mb-4">
-              <label className="w-16 font-semibold">To:</label>
-              <div className="w-48">
-                <InputTag
-                  value={toValue}
-                  setter={() => {}}
-                  disabled={true}
-                  name={toUnit}
-                />
-              </div>
-              <span className="ml-2 font-bold">{toUnit}</span>
-            </div>
-          </div>
-
-          {reversePath && (
-            <div className="cursor-pointer">
-              <span
-                className="text-green-700 text-xl"
-                onClick={() => router.push(reversePath)}
-              >
-                ↕
-              </span>
-            </div>
-          )}
-        </div>
-
-        <div className="flex space-x-4">
-          <GreenBtn text="Convert" clickEvent={convert} />
-          <GreenBtn text="Clear" clickEvent={clear} />
-        </div>
-      </div> */}
 
       {/* Definitions */}
       {definitions.map((section, index) => (
         <section key={index} className="mt-10 space-y-3 text-justify">
           <h1 className="text-xl text-[#006633] font-semibold">
-            {section.heading}
           </h1>
           {section.content.map((e, i) => (
-            <p key={i}>{e}</p>
+            <p key={i}>
+              <strong>{e.split(":")[0]}: </strong>
+              {e.split(":")[1]}
+            </p>
           ))}
         </section>
       ))}

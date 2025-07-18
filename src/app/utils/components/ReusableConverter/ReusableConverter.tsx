@@ -88,7 +88,7 @@ const ReusableConverter: React.FC<UnitConverterProps> = ({
               <input
                 type="text"
                 readOnly
-                value={fromValue ? result.toFixed(6) : ""}
+                value={fromValue ? result : ""}
                 className="w-full p-3 border border-[#138a55] outline-none rounded-lg bg-gray-50"
               />
               {/* <select
@@ -119,7 +119,7 @@ const ReusableConverter: React.FC<UnitConverterProps> = ({
             <div className="mt-4 p-3 bg-[#006633]/5 rounded-lg border border-[#006633]/10">
               <p className="text-[#006633] font-medium text-center">
                 {numericValue} {fromUnit} ={" "}
-                <span className="font-bold">{result.toFixed(6)}</span> {toUnit}
+                <span className="font-bold">{result}</span> {toUnit}
               </p>
             </div>
           )}

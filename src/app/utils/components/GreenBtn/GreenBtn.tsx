@@ -14,7 +14,7 @@ const RejectBtn = ({ text, clickEvent, disabled, isCruding }: Props) => {
       <button
         onClick={clickEvent}
         disabled={disabled || isCruding}
-        className="bg-green-800 text-white font-bold px-4 py-2 rounded shadow hover:bg-green-900"
+        className="bg-green-800 text-white font-bold px-4 py-2 rounded shadow hover:bg-green-900 cursor-pointer"
       >
         {isCruding ? <BladeLoader /> : text}
       </button>
